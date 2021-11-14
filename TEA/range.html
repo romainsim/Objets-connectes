@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TEA</title>
+</head>
+<body>
+<div>
+  <input type="range" name="rangeInput" min="0" max="4095" id="myRange">
+</div>
+<div>
+  <input type="text" id="mtText" value="2000">
+</div>
+</body>
+</html>
+<script>
+  const input = document.querySelector('#mtText');
+  const range = document.querySelector('#myRange');
+
+  const refresh = async () => {
+    const value = await getDataTest();
+    input.value = value;
+    range.value = value;
+  };
+
+  const getData = async () => {
+    const res = await fetch('serveurtp');
+    return res.text();
+  };
+
+  const getDataTest = async () => {
+    return Math.round(0 + Math.random() * 4095);
+  };
+
+  setInterval(refresh, 5000);
+</script>
