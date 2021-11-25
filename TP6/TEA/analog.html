@@ -1,0 +1,89 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+    #needle, #needle2 {
+      width: 140px;
+      height: 5px;
+      background-color: red;
+      transition: transform 1s ease;
+      transform-origin: 100% 50%;
+      border-bottom-left-radius: 100%;
+      border-top-left-radius: 100%;
+      margin: auto auto 0 auto;
+      transform: translateX(-50%);
+    }
+
+    .circle {
+      border-top-left-radius: 9999px;
+      border-top-right-radius: 9999px;
+      display: flex;
+      width: 300px;
+      height: 150px;
+      background-color: black;
+    }
+
+    #input, #input2 {
+      background-color: black;
+      color: white;
+      border: 0;
+      width: 300px;
+      text-align: center;
+      padding: 9px;
+      outline: 0;
+      font-weight: bold;
+      border-top: 2px solid rgba(255, 255, 255, 0.2);
+    }
+  </style>
+  <body>
+    <div class="circle">
+      <div id="needle"></div>
+    </div>
+    <input id="input" value="0" type="text" />
+	
+	<div class="circle">
+      <div id="needle2"></div>
+    </div>
+    <input id="input2" value="0" type="text" />
+
+    <script>
+      const input = document.querySelector('#input');
+      const needle = document.querySelector('#needle');
+	  const tempI = document.querySelector('#input2');
+	  const tempT = document.querySelector('#needle2');
+
+      const refresh = async () => {
+        const value = (await getData()).split(';');
+        input.value = value[0];
+        needle.style.transform = `translateX(-50%) rotate(${
+          (value[0] * 180) / 4095
+        }deg)`;
+		input2.value = value[1];
+        needle2.style.transform = `translateX(-50%) rotate(${
+          (value[1] * 180) / 50
+        }deg)`;
+      };
+
+      const getData = async () => {
+        const res = await fetch('readValeur');
+        return res.text();
+      };
+
+
+      setInterval(refresh, 1000);
+    </script>
+  </body>
+</html>

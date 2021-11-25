@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TEA</title>
+</head>
+<body>
+<div>
+  <input type="range" name="rangeInput" min="0" max="4095" id="myRange">
+</div>
+<div>
+  <input type="text" id="mtText" value="2000">
+</div>
+<div>
+  <input type="range" name="rangeTemp" min="0" max="4095" id="rangeTemp">
+</div>
+<div>
+  <input type="text" id="tempText" value="2000">
+</div>
+</body>
+</html>
+<script>
+  const input = document.querySelector('#mtText');
+  const range = document.querySelector('#myRange');
+  const tempI = document.querySelector('#rangeTemp');
+  const tempT = document.querySelector('#tempText');
+
+  const refresh = async () => {
+    const value = (await getData()).split(';');
+    input.value = value[0];
+    range.value = value[0];
+	tempI.value = value[1];
+	tempT.value = value[1];
+  };
+
+  const getData = async () => {
+    const res = await fetch('readValeur');
+    return res.text();
+  };
+
+  setInterval(refresh, 1000);
+</script>
