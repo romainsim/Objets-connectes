@@ -7,7 +7,7 @@ class Bargraph {
     void Dec();
     void Mode(int);
   private:
-    int _val, CLK, AB, int modeB;
+    int _val, CLK, AB, modeB;
     const int _maxval;
 };
 
